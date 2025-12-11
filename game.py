@@ -1,5 +1,5 @@
 from helpers import draw_board, check_side, check_win, format_player, terminal_colors
-from engine import best_move
+from engine import Kibitzer
 
 class Game:
     def __init__(self):
@@ -38,7 +38,8 @@ def human_human():
         # Reset the screen
         draw_board(game.board)
         print(game.message + f"\nTurn {game.ply + 1} for player {check_side(game.ply)} or press 'q' to quit")
-        best_move(game.board,game.ply)
+        t0e = Kibitzer()
+        t0e.best_move(game.board,game.ply)
         # Get input from player
         move = input()
         if move == 'q':
@@ -75,8 +76,9 @@ def human_AI():
         draw_board(game.board)
         side = check_side(game.ply)
         print(game.message + f"\nTurn {game.ply + 1} for player {side} or press 'q' to quit")
-        if side == 'O': 
-            move = best_move(game.board,game.ply)[0]
+        if side == 'O':
+            t0e = Kibitzer()
+            move = t0e.best_move(game.board,game.ply)[0]
             move_int = int(move) - 1
             if 0 <= move_int < len(game.board):
                 # Check if spot is taken
@@ -121,8 +123,8 @@ def AI_AI():
     game = Game()
 
     while game.playing:
-        # Reset the screen
-        move = best_move(game.board,game.ply)[0]
+        t0e = Kibitzer()
+        move = t0e.best_move(game.board,game.ply)[0]
     
         move_int = int(move) - 1
         if 0 <= move_int < len(game.board):
