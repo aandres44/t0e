@@ -1,3 +1,4 @@
+import os
 from helpers import draw_board, check_side, check_win, format_player, terminal_colors
 from engine import Kibitzer
 
@@ -11,25 +12,28 @@ class Game:
         self.message = ""
     
 
-def reset_game():
-    global board, playing, won, ply, message
-    board = ['1', '2', '3', '4' ,'5', '6', '7', '8', '9']
-
-    # Give the code more structure
-    playing = True
-    won = False
-
-    # Half moves
-    ply = 0
-
-    message = ""
-
 def main_menu():
-    print("Welcome! Please select a game mode from the menu below or press '0' to quit")
-    print("     1. Human vs Human")
-    print("     2. Human vs AI")
-    print("     3. AI vs AI")
-    print("     0. Quit game")
+    waiting = True
+    while waiting:
+        print("Welcome! Please select a game mode from the menu below or press '0' to quit")
+        print("     1. Human vs Human")
+        print("     2. Human vs AI")
+        print("     3. AI vs AI")
+        print("     0. Quit game")
+        selection = input()
+        match selection:
+            case '0':
+                waiting = False
+            case '1':
+                human_human()
+            case '2':
+                human_AI()
+            case '3':
+                AI_AI()
+            case _:
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print(f"{terminal_colors.FAIL}Invalid option{terminal_colors.END_C}")
+
 
 def human_human():
     game = Game()
@@ -143,6 +147,3 @@ def AI_AI():
     # Print winner if applicable
     if game.won: print(f"Player '{format_player(check_side(game.ply-1))}' {terminal_colors.OK_GREEN}Wins!{terminal_colors.END_C}")
     else: print(f"{terminal_colors.OK_CYAN}{terminal_colors.BOLD}GAME OVER - Tie!{terminal_colors.END_C}")
-
-
-AI_AI()
