@@ -78,7 +78,7 @@ def human_AI():
         print(game.message + f"\nTurn {game.ply + 1} for player {side} or press 'q' to quit")
         if side == 'O':
             t0e = Kibitzer()
-            move = t0e.best_move(game.board,game.ply)[0]
+            move = t0e.best_move(game.board,game.ply)[0].position
             move_int = int(move) - 1
             if 0 <= move_int < len(game.board):
                 # Check if spot is taken
@@ -119,8 +119,7 @@ def AI_AI():
 
     while game.playing:
         t0e = Kibitzer()
-        move = t0e.best_move(game.board,game.ply)[0]
-    
+        move = t0e.best_move(game.board,game.ply)[0].position
         move_int = int(move) - 1
         if 0 <= move_int < len(game.board):
             if is_available(game.board, move_int):
