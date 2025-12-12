@@ -8,17 +8,23 @@ class Move:
         self.player = player
 
     def __repr__(self):
-        return f"score: {self.score}' position: {self.position}) player: {self.player}"
+        return f"score: {100 - self.score}' position: {self.position}) player: {self.player}"
 
 class Kibitzer:
     def __init__(self, p1:str='O', p2:str='X') -> None:
         self.p1 = p1
         self.p2 = p2
         self.moves:dict[int, Move] = {}
-        self.scores = {p1: -1, p2: 1, 'tie': 0}
+        # Max values are bigger than 100 to search for the fastest win or slowest loss using depth
+        self.scores:dict[str, float] = {p1: -100, p2: 100, 'tie': 0}
 
     def minimax(self, board: list[str], depth: int, is_maximizing: bool, ply: int)->float:
-        if check_win(board): return self.scores[check_side(ply)]
+        curr_side = check_side(ply)
+        if check_win(board):
+            score = self.scores[curr_side] - depth
+            if is_maximizing:
+                score = self.scores[curr_side] + depth
+            return score
         elif ply > 8: return self.scores['tie']
 
         limit_eval = float('inf')
@@ -35,7 +41,7 @@ class Kibitzer:
                 #max_eval = max(max_eval, eval)
                 if (is_maximizing and eval > limit_eval) or ((not is_maximizing) and eval < limit_eval):
                     limit_eval = eval
-                    self.moves[depth] = Move(eval, i+1, check_side(ply))
+                    self.moves[depth] = Move(eval, i+1, curr_side)
         self.moves = dict(sorted(self.moves.items()))
         return limit_eval
 
