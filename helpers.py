@@ -47,9 +47,10 @@ def format_player(player):
     elif player == 'O': player = f"{terminal_colors.FAIL}{player}{terminal_colors.END_C}"
     return player
 
-def action_for_each(action, action2, board):
+"""def action_for_each(action, action2, board):
     for i, spot in enumerate(board):
         if (i+1) % 3 == 0: action(i, board)
-        else: action2(i, spot)
+        else: action2(i, spot)"""
 
-#def validate_move(ply):
+def is_available(board, move):
+    return True if not board[move] in {"X", "O"} else False

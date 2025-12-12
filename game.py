@@ -1,5 +1,5 @@
 import os
-from helpers import draw_board, check_side, check_win, format_player, terminal_colors
+from helpers import draw_board, check_side, check_win, format_player, is_available, terminal_colors
 from engine import Kibitzer
 
 class Game:
@@ -54,14 +54,14 @@ def human_human():
             move_int = int(move) - 1
             if 0 <= move_int < len(game.board):
                 # Check if spot is taken
-                if not game.board[move_int] in {"X", "O"}:
+                if is_available(game.board, move_int):
                     # Update board
                     game.board[move_int] = check_side(game.ply)
                     game.ply += 1
                     game.message = ""
                 else: game.message = f"{terminal_colors.WARNING}Warning: Spot already taken{terminal_colors.END_C}"
             else: game.message = f"{terminal_colors.FAIL}Invalid move{terminal_colors.END_C}"
-        else: game.message = f"{terminal_colors.FAIL}Invalid move{terminal_colors.END_C}"
+        else: game.message = f"{terminal_colors.FAIL}Invalid input{terminal_colors.END_C}"
 
         if check_win(game.board): game.playing, game.won = False, True
         if game.ply > 8: game.playing = False
@@ -86,7 +86,7 @@ def human_AI():
             move_int = int(move) - 1
             if 0 <= move_int < len(game.board):
                 # Check if spot is taken
-                if not game.board[move_int] in {"X", "O"}:
+                if is_available(game.board, move_int):
                     # Update board
                     game.board[move_int] = check_side(game.ply)
                     game.ply += 1
@@ -104,15 +104,14 @@ def human_AI():
             elif str.isdigit(move):
                 move_int = int(move) - 1
                 if 0 <= move_int < len(game.board):
-                    # Check if spot is taken
-                    if not game.board[move_int] in {"X", "O"}:
+                    if is_available(game.board, move_int):
                         # Update board
                         game.board[move_int] = side
                         game.ply += 1
                         game.message = ""
                     else: game.message = f"{terminal_colors.WARNING}Warning: Spot already taken{terminal_colors.END_C}"
                 else: game.message = f"{terminal_colors.FAIL}Invalid move{terminal_colors.END_C}"
-            else: game.message = f"{terminal_colors.FAIL}Invalid move{terminal_colors.END_C}"
+            else: game.message = f"{terminal_colors.FAIL}Invalid input{terminal_colors.END_C}"
 
         if check_win(game.board): game.playing, game.won = False, True
         if game.ply > 8: game.playing = False
@@ -132,8 +131,7 @@ def AI_AI():
     
         move_int = int(move) - 1
         if 0 <= move_int < len(game.board):
-            # Check if spot is taken
-            if not game.board[move_int] in {"X", "O"}:
+            if is_available(game.board, move_int):
                 # Update board
                 game.board[move_int] = check_side(game.ply)
                 game.ply += 1
