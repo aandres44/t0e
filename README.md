@@ -1,1 +1,1 @@
-Run ````python .\main.py```` to run the game
+Use ````python .\main.py```` to run the game

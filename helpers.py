@@ -11,7 +11,7 @@ class terminal_colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-def draw_board(board):
+def draw_board(board: list[str]):
     #board = "|1|2|3|\n|4|5|6|\n|7|8|9|"
     os.system('cls' if os.name == 'nt' else 'clear')
     for i, spot in enumerate(board):
@@ -19,11 +19,11 @@ def draw_board(board):
         if (i+1) % 3 == 0: print("|" + spot + "|")
         else: print("|" + spot, end="")
 
-def check_side(ply):
+def check_side(ply: int):
     if ply % 2 == 0: return 'O'
     else: return 'X'
 
-def check_win(board):
+def check_win(board: list[str]):
     # Horizontal
     if      (board[0] == board[1] == board[2]) \
           or (board[3] == board[4] == board[5]) \
@@ -42,7 +42,7 @@ def check_win(board):
         return True
     else: return False
 
-def format_player(player):
+def format_player(player: str):
     if player == 'X': player = f"{terminal_colors.OK_BLUE}{player}{terminal_colors.END_C}"
     elif player == 'O': player = f"{terminal_colors.FAIL}{player}{terminal_colors.END_C}"
     return player
@@ -52,5 +52,5 @@ def format_player(player):
         if (i+1) % 3 == 0: action(i, board)
         else: action2(i, spot)"""
 
-def is_available(board, move):
+def is_available(board: list[str], move: int):
     return True if not board[move] in {"X", "O"} else False

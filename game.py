@@ -66,11 +66,7 @@ def human_human():
         if check_win(game.board): game.playing, game.won = False, True
         if game.ply > 8: game.playing = False
 
-    draw_board(game.board)
-
-    # Print winner if applicable
-    if game.won: print(f"Player '{format_player(check_side(game.ply-1))}' {terminal_colors.OK_GREEN}Wins!{terminal_colors.END_C}")
-    else: print(f"{terminal_colors.OK_CYAN}{terminal_colors.BOLD}GAME OVER - Tie!{terminal_colors.END_C}")
+    print_end_game(game)
 
 def human_AI():
     game = Game()
@@ -116,11 +112,7 @@ def human_AI():
         if check_win(game.board): game.playing, game.won = False, True
         if game.ply > 8: game.playing = False
 
-    draw_board(game.board)
-
-    # Print winner if applicable
-    if game.won: print(f"Player '{format_player(check_side(game.ply-1))}' {terminal_colors.OK_GREEN}Wins!{terminal_colors.END_C}")
-    else: print(f"{terminal_colors.OK_CYAN}{terminal_colors.BOLD}GAME OVER - Tie!{terminal_colors.END_C}")
+    print_end_game(game)
 
 def AI_AI():
     game = Game()
@@ -140,8 +132,10 @@ def AI_AI():
         if check_win(game.board): game.playing, game.won = False, True
         if game.ply > 8: game.playing = False
 
-    draw_board(game.board)
+    print_end_game(game)
 
+def print_end_game(game: Game):
+    draw_board(game.board)
     # Print winner if applicable
     if game.won: print(f"Player '{format_player(check_side(game.ply-1))}' {terminal_colors.OK_GREEN}Wins!{terminal_colors.END_C}")
     else: print(f"{terminal_colors.OK_CYAN}{terminal_colors.BOLD}GAME OVER - Tie!{terminal_colors.END_C}")
