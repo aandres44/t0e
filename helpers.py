@@ -19,11 +19,11 @@ def draw_board(board: list[str]):
         if (i+1) % 3 == 0: print("|" + spot + "|")
         else: print("|" + spot, end="")
 
-def check_side(ply: int):
+def check_side(ply: int) -> str:
     if ply % 2 == 0: return 'O'
     else: return 'X'
 
-def check_win(board: list[str]):
+def check_win(board: list[str]) -> bool:
     # Horizontal
     if      (board[0] == board[1] == board[2]) \
           or (board[3] == board[4] == board[5]) \
@@ -42,7 +42,7 @@ def check_win(board: list[str]):
         return True
     else: return False
 
-def format_player(player: str):
+def format_player(player: str) -> str:
     if player == 'X': player = f"{terminal_colors.OK_BLUE}{player}{terminal_colors.END_C}"
     elif player == 'O': player = f"{terminal_colors.FAIL}{player}{terminal_colors.END_C}"
     return player
@@ -52,5 +52,5 @@ def format_player(player: str):
         if (i+1) % 3 == 0: action(i, board)
         else: action2(i, spot)"""
 
-def is_available(board: list[str], move: int):
+def is_available(board: list[str], move: int) -> bool:
     return True if not board[move] in {"X", "O"} else False

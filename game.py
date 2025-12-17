@@ -3,14 +3,13 @@ from helpers import draw_board, check_side, check_win, format_player, is_availab
 from engine import Kibitzer
 
 class Game:
-    def __init__(self):
+    def __init__(self) -> None:
         self.board = ['1', '2', '3', '4' ,'5', '6', '7', '8', '9']
         self.playing = True
         self.won = False
         # Half moves
         self.ply = 0
         self.message = ""
-    
 
 def main_menu():
     waiting = True
